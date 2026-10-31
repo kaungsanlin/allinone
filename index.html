@@ -129,9 +129,8 @@
   </footer>
 
   <script>
-    // ⚠️ ဤနေရာတွင် အထက်ပါ Web App URL အသစ်ကို ထည့်ပါ
-    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbznnx0KwMjX7hle8RGFwlExUJ8c2d1balBielBjUXpdyx3gepfvnEsfEFV9rRlEZd1H/exec";
-    const BOT_TOKEN = "9008442267:AAE4SevHCJAihjf5BLgLMuJ-uPiWu432IdY";
+    // ⚠️ GAS Web App URL အသစ်ကို ဤနေရာတွင် ထည့်ပါ
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwsdgYP-lBS2xwAx6BAfh5u3Sd10haiG-xzZ4CkGBtQgtBgYN12AgHlUiwmJAewRike/exec";
 
     let currentCategory = 'photos';
     let allFilesData = { photos: [], apps: [], others: [], adult: [] };
@@ -186,19 +185,7 @@
         const files = await res.json();
         
         if (Array.isArray(files)) {
-          for (let file of files) {
-            try {
-              let pathRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${file.fileId}`);
-              let pathData = await pathRes.json();
-              if (pathData.ok) {
-                file.url = `https://api.telegram.org/file/bot${BOT_TOKEN}/${pathData.result.file_path}`;
-              } else {
-                continue;
-              }
-            } catch (e) {
-              continue;
-            }
-
+          files.forEach(file => {
             const fileNameLower = file.name.toLowerCase();
             const ext = fileNameLower.split('.').pop();
             
@@ -211,7 +198,7 @@
             } else {
               allFilesData.others.push(file);
             }
-          }
+          });
         }
 
         document.getElementById('badge-photos').textContent = allFilesData.photos.length;
@@ -304,7 +291,7 @@
               <p class="text-xs text-slate-400 mt-0.5">Android APK</p>
             </div>
           </div>
-          <button onclick="downloadFile('${file.url}', '${file.name}')" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2 shadow-md">
+          <button onclick="downloadFile('${file.url}', '${file.name}')" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-lg transition flex items-center justify-center gap-2 shadow-md">
             <i class="fa-solid fa-download"></i> ဒေါင်းလုဒ်ရယူရန်
           </button>
         </div>
@@ -333,7 +320,7 @@
     }
 
     function filterItems() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
+      const query = document.getElementById('searchInput'].value.toLowerCase();
       const activeSec = document.getElementById(`category-${currentCategory}`);
       const cards = activeSec.querySelectorAll('.item-card');
       cards.forEach(card => {
@@ -350,7 +337,7 @@
         container.innerHTML = `<img src="${url}" alt="Full View" class="max-w-full max-h-[80vh] object-contain">`;
       }
       document.getElementById('lightbox-caption').textContent = title;
-      document.getElementById('lightbox-download-btn'].setAttribute('onclick', `downloadFile('${url}', '${title}')`);
+      document.getElementById('lightbox-download-btn').setAttribute('onclick', `downloadFile('${url}', '${title}')`);
       document.getElementById('lightbox').classList.add('active');
     }
 
