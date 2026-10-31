@@ -186,7 +186,20 @@
         const files = await res.json();
         
         if (Array.isArray(files)) {
-          files.forEach(file => {
+          for (let file of files) {
+            // Telegram File ID မှတဆင့် Direct File Path ကို အချိန်နှင့်တစ်ပြေးညီ တောင်းခံခြင်း
+            try {
+              let pathRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${file.fileId}`);
+              let pathData = await pathRes.json();
+              if (pathData.ok) {
+                file.url = `https://api.telegram.org/file/bot${BOT_TOKEN}/${pathData.result.file_path}`;
+              } else {
+                continue;
+              }
+            } catch (e) {
+              continue;
+            }
+
             const fileNameLower = file.name.toLowerCase();
             const ext = fileNameLower.split('.').pop();
             
@@ -200,7 +213,7 @@
             } else {
               allFilesData.others.push(file);
             }
-          });
+          }
         }
 
         document.getElementById('badge-photos').textContent = allFilesData.photos.length;
