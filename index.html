@@ -129,8 +129,8 @@
   </footer>
 
   <script>
-    // ⚠️ GAS Web App URL အသစ်ကို ဤနေရာတွင် ထည့်ပါ
-    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw4WuKLgTUqnCCAZn7MMr-7NHv6opndWx6Wqt3Ul7jns2RBaLEt9i6yar5okX9KS5S4/exec";
+    // ⚠️ ဤနေရာတွင် အထက်ပါ Web App URL အသစ်ကို ထည့်ပါ
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbznnx0KwMjX7hle8RGFwlExUJ8c2d1balBielBjUXpdyx3gepfvnEsfEFV9rRlEZd1H/exec";
     const BOT_TOKEN = "9008442267:AAE4SevHCJAihjf5BLgLMuJ-uPiWu432IdY";
 
     let currentCategory = 'photos';
@@ -187,7 +187,6 @@
         
         if (Array.isArray(files)) {
           for (let file of files) {
-            // Telegram File ID မှတဆင့် Direct File Path ကို အချိန်နှင့်တစ်ပြေးညီ တောင်းခံခြင်း
             try {
               let pathRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${file.fileId}`);
               let pathData = await pathRes.json();
@@ -203,7 +202,6 @@
             const fileNameLower = file.name.toLowerCase();
             const ext = fileNameLower.split('.').pop();
             
-            // ဖိုင်နာမည်တွင် 18+ သို့မဟုတ် adult ပါလျှင် 18+ Tab သို့ ပို့မည်
             if (fileNameLower.includes('18+') || fileNameLower.includes('adult') || fileNameLower.includes('sex')) {
               allFilesData.adult.push(file);
             } else if (['jpg', 'jpeg', 'png', 'webp', 'mp4', 'webm', 'mov'].includes(ext)) {
@@ -227,6 +225,7 @@
         document.getElementById('loading-state').innerHTML = '<p class="text-red-400">ဖိုင်များ ဆွဲထုတ်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။</p>';
       }
     }
+
     async function downloadFile(url, filename) {
       try {
         const response = await fetch(url);
@@ -351,7 +350,7 @@
         container.innerHTML = `<img src="${url}" alt="Full View" class="max-w-full max-h-[80vh] object-contain">`;
       }
       document.getElementById('lightbox-caption').textContent = title;
-      document.getElementById('lightbox-download-btn').setAttribute('onclick', `downloadFile('${url}', '${title}')`);
+      document.getElementById('lightbox-download-btn'].setAttribute('onclick', `downloadFile('${url}', '${title}')`);
       document.getElementById('lightbox').classList.add('active');
     }
 
