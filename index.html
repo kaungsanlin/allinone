@@ -130,12 +130,11 @@
 
   <script>
     // ⚠️ GAS Web App URL အသစ်ကို ဤနေရာတွင် ထည့်ပါ
-    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwsdgYP-lBS2xwAx6BAfh5u3Sd10haiG-xzZ4CkGBtQgtBgYN12AgHlUiwmJAewRike/exec";
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxQvtSsoAqH8Hm9338RcQnQEXJwiXkx6esFt39L9RFQ3824cSptp36lKa-T0EW0ztij/exec";
 
     let currentCategory = 'photos';
     let allFilesData = { photos: [], apps: [], others: [], adult: [] };
 
-    // Secret 3-Click Variables for 18+ Section
     let clickCount = 0;
     let clickTimer = null;
 
@@ -291,7 +290,7 @@
               <p class="text-xs text-slate-400 mt-0.5">Android APK</p>
             </div>
           </div>
-          <button onclick="downloadFile('${file.url}', '${file.name}')" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-lg transition flex items-center justify-center gap-2 shadow-md">
+          <button onclick="downloadFile('${file.url}', '${file.name}')" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2 shadow-md">
             <i class="fa-solid fa-download"></i> ဒေါင်းလုဒ်ရယူရန်
           </button>
         </div>
@@ -320,7 +319,7 @@
     }
 
     function filterItems() {
-      const query = document.getElementById('searchInput'].value.toLowerCase();
+      const query = document.getElementById('searchInput').value.toLowerCase();
       const activeSec = document.getElementById(`category-${currentCategory}`);
       const cards = activeSec.querySelectorAll('.item-card');
       cards.forEach(card => {
